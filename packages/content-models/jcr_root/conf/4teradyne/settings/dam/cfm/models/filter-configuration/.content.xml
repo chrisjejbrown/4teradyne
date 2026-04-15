@@ -7,7 +7,11 @@
           jcr:description="Defines filter column metadata for the product explorer (display label, UI type, options, sort order)"
           ranking="{Long}400"
           status="enabled">
-    <jcr:content jcr:primaryType="nt:unstructured">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Product Explorer Filter Configuration"
+        dataTypesConfig="/mnt/overlay/settings/dam/cfm/models/formbuilderconfig/datatypes"
+        formModelPath="dam/cfm/models/editor/components/aemform">
         <items jcr:primaryType="nt:unstructured">
 
             <filterName

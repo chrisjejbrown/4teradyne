@@ -7,7 +7,11 @@
           jcr:description="Rich popup content for supported bus or test application entries with heading, description, related instruments, CTA, and image"
           ranking="{Long}300"
           status="enabled">
-    <jcr:content jcr:primaryType="nt:unstructured">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Product Popup Detail"
+        dataTypesConfig="/mnt/overlay/settings/dam/cfm/models/formbuilderconfig/datatypes"
+        formModelPath="dam/cfm/models/editor/components/aemform">
         <items jcr:primaryType="nt:unstructured">
 
             <heading

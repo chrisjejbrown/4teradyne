@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <!-- CF Model definitions -->
-    <filter root="/conf/4teradyne/settings/dam/cfm/models/defense-product" mode="merge"/>
-    <filter root="/conf/4teradyne/settings/dam/cfm/models/product-category" mode="merge"/>
-    <filter root="/conf/4teradyne/settings/dam/cfm/models/product-popup-detail" mode="merge"/>
-    <filter root="/conf/4teradyne/settings/dam/cfm/models/filter-configuration" mode="merge"/>
+    <!-- Configuration root for CF models -->
+    <filter root="/conf/4teradyne/settings/dam/cfm/models" mode="merge"/>
     <!-- DAM folder structure for product images -->
-    <filter root="/content/dam/4teradyne/products" mode="merge"/>
-    <filter root="/content/dam/4teradyne/defense-aerospace" mode="merge"/>
+    <filter root="/content/dam/4teradyne" mode="merge"/>
 </workspaceFilter>

@@ -8,7 +8,11 @@
           jcr:description="Product entry for the Defense &amp; Aerospace Product Explorer. Maps to WP custom post type finderproducts with ACF fields."
           ranking="{Long}100"
           status="enabled">
-    <jcr:content jcr:primaryType="nt:unstructured">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Defense &amp; Aerospace Product"
+        dataTypesConfig="/mnt/overlay/settings/dam/cfm/models/formbuilderconfig/datatypes"
+        formModelPath="dam/cfm/models/editor/components/aemform">
         <items jcr:primaryType="nt:unstructured">
 
             <!-- Product Model Number -->

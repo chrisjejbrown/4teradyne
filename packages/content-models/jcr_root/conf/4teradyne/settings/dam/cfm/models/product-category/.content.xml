@@ -7,7 +7,11 @@
           jcr:description="Defense &amp; Aerospace product category for the product explorer (maps to WP taxonomy product_finder_cat)"
           ranking="{Long}200"
           status="enabled">
-    <jcr:content jcr:primaryType="nt:unstructured">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Product Category"
+        dataTypesConfig="/mnt/overlay/settings/dam/cfm/models/formbuilderconfig/datatypes"
+        formModelPath="dam/cfm/models/editor/components/aemform">
         <items jcr:primaryType="nt:unstructured">
 
             <name
