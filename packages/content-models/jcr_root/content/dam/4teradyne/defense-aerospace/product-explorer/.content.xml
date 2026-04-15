@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          jcr:primaryType="sling:Folder"
+          jcr:title="product-explorer">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Product Explorer Assets"
+        jcr:description="Images for product popup details and explorer UI assets"/>
+</jcr:root>

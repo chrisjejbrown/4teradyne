@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          jcr:primaryType="cq:Template"
+          jcr:title="Defense &amp; Aerospace Product"
+          jcr:description="Product entry for the Defense &amp; Aerospace Product Explorer. Maps to WP custom post type finderproducts with ACF fields."
+          ranking="{Long}100"
+          status="enabled">
+    <jcr:content jcr:primaryType="dam:cfm/models/formbuilderconfig">
+        <items jcr:primaryType="nt:unstructured">
+
+            <!-- Product Model Number -->
+            <productModel
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Model Number"
+                fieldDescription="Short model identifier displayed as the primary label in product cards (e.g., PXIe-25G, Guardian, Spectrum BT)"
+                name="productModel"
+                required="{Boolean}true"
+                renderType="textfield"
+                valueType="string"/>
+
+            <!-- Product Name -->
+            <productName
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Product Name"
+                fieldDescription="Descriptive name without model prefix, shown as subtitle in product cards"
+                name="productName"
+                required="{Boolean}true"
+                renderType="textfield"
+                valueType="string"/>
+
+            <!-- Description -->
+            <description
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Description"
+                fieldDescription="Short product summary shown in the explorer results (max 300 characters)"
+                name="description"
+                required="{Boolean}true"
+                renderType="textarea"
+                valueType="string"/>
+
+            <!-- Product Image -->
+            <image
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/contentreference"
+                fieldLabel="Product Image"
+                fieldDescription="Product photo or rendering from /content/dam/4teradyne/products"
+                name="image"
+                required="{Boolean}false"
+                renderType="contentreference"
+                valueType="string"
+                rootPath="/content/dam/4teradyne/products"/>
+
+            <!-- Product Category -->
+            <category
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/fragmentreference"
+                fieldLabel="Product Category"
+                fieldDescription="The primary product category this product belongs to"
+                name="category"
+                required="{Boolean}true"
+                renderType="fragmentreference"
+                valueType="string"
+                fragmentModelPath="/conf/4teradyne/settings/dam/cfm/models/product-category"/>
+
+            <!-- Search Weight -->
+            <searchWeight
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/numberfield"
+                fieldLabel="Search Weight"
+                fieldDescription="Sort priority within category results. Lower number = higher priority."
+                name="searchWeight"
+                required="{Boolean}false"
+                renderType="numberfield"
+                valueType="long"
+                defaultValue="10"/>
+
+            <!-- Brochure Label -->
+            <brochureLabel
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Brochure Button Label"
+                fieldDescription="CTA button text for the brochure/datasheet link"
+                name="brochureLabel"
+                required="{Boolean}false"
+                renderType="textfield"
+                valueType="string"
+                defaultValue="Learn More"/>
+
+            <!-- Brochure URL -->
+            <brochureUrl
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Brochure URL"
+                fieldDescription="Link to product brochure PDF, HubSpot form, or external product page"
+                name="brochureUrl"
+                required="{Boolean}false"
+                renderType="textfield"
+                valueType="string"/>
+
+            <!-- Brochure Target -->
+            <brochureTarget
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/enumeration"
+                fieldLabel="Brochure Link Target"
+                fieldDescription="Whether brochure opens in new tab"
+                name="brochureTarget"
+                required="{Boolean}false"
+                renderType="dropdown"
+                valueType="string"
+                defaultValue="_blank">
+                <items jcr:primaryType="nt:unstructured">
+                    <item0 jcr:primaryType="nt:unstructured" value="_self" label="Same Window"/>
+                    <item1 jcr:primaryType="nt:unstructured" value="_blank" label="New Tab"/>
+                </items>
+            </brochureTarget>
+
+            <!-- ===== FILTER FIELDS ===== -->
+
+            <!-- Platform Filter -->
+            <platformFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/enumeration"
+                fieldLabel="Platform"
+                fieldDescription="Hardware platform form factors this product supports"
+                name="platformFilter"
+                required="{Boolean}false"
+                renderType="checkbox"
+                valueType="string[]">
+                <items jcr:primaryType="nt:unstructured">
+                    <pxi jcr:primaryType="nt:unstructured" value="PXI" label="PXI"/>
+                    <pxie jcr:primaryType="nt:unstructured" value="PXIe" label="PXIe"/>
+                    <lxi jcr:primaryType="nt:unstructured" value="LXI" label="LXI"/>
+                    <vxi jcr:primaryType="nt:unstructured" value="VXI" label="VXI"/>
+                </items>
+            </platformFilter>
+
+            <!-- Physical Interface Filter -->
+            <physicalInterfaceFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/enumeration"
+                fieldLabel="Physical Interface"
+                fieldDescription="Connection types: copper or optical"
+                name="physicalInterfaceFilter"
+                required="{Boolean}false"
+                renderType="checkbox"
+                valueType="string[]">
+                <items jcr:primaryType="nt:unstructured">
+                    <copper jcr:primaryType="nt:unstructured" value="Copper" label="Copper"/>
+                    <optical jcr:primaryType="nt:unstructured" value="Optical" label="Optical"/>
+                </items>
+            </physicalInterfaceFilter>
+
+            <!-- SW-Defined Filter -->
+            <swDefinedFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/boolean"
+                fieldLabel="Software-Defined"
+                fieldDescription="Whether the instrument is software-defined/reconfigurable"
+                name="swDefinedFilter"
+                required="{Boolean}false"
+                renderType="boolean"
+                valueType="boolean"/>
+
+            <!-- CE Filter -->
+            <ceFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/boolean"
+                fieldLabel="CE Certified"
+                fieldDescription="CE compliance/certification flag"
+                name="ceFilter"
+                required="{Boolean}false"
+                renderType="boolean"
+                valueType="boolean"/>
+
+            <!-- Supported Bus Filter -->
+            <supportedBusFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Supported Bus Protocols"
+                fieldDescription="Bus protocols this product supports (used for filtering)"
+                name="supportedBusFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- Test Applications Filter -->
+            <testApplicationsFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Test Applications"
+                fieldDescription="Test application scenarios this product supports (used for filtering)"
+                name="testApplicationsFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- Number of Channels Filter -->
+            <numberOfChannelsFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Number of Channels"
+                fieldDescription="Channel count for Analog, Optical, Switching, Parallel Digital categories"
+                name="numberOfChannelsFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- Function Filter -->
+            <functionFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Instrument Function"
+                fieldDescription="Instrument function type (Analog Test category only)"
+                name="functionFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- Resolution Filter -->
+            <resolutionFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Resolution"
+                fieldDescription="ADC/DAC resolution (Analog Test category only)"
+                name="resolutionFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- Analog Bandwidth Filter -->
+            <analogBandwidthFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Analog Bandwidth"
+                fieldDescription="Analog bandwidth (Analog Test category only)"
+                name="analogBandwidthFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- Sample Rate Filter -->
+            <sampleRateFilter
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Maximum Sample Rate"
+                fieldDescription="Maximum sample rate (Analog Test category only)"
+                name="sampleRateFilter"
+                required="{Boolean}false"
+                renderType="tags"
+                valueType="string[]"/>
+
+            <!-- ===== RICH CONTENT REFERENCES ===== -->
+
+            <!-- Supported Bus Details -->
+            <supportedBusDetails
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/fragmentreference"
+                fieldLabel="Supported Bus Details"
+                fieldDescription="Rich popup details for each supported bus entry (heading, description, related instruments, CTA, image)"
+                name="supportedBusDetails"
+                required="{Boolean}false"
+                renderType="fragmentreference-multiple"
+                valueType="string[]"
+                fragmentModelPath="/conf/4teradyne/settings/dam/cfm/models/product-popup-detail"/>
+
+            <!-- Test Application Details -->
+            <testApplicationDetails
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/fragmentreference"
+                fieldLabel="Test Application Details"
+                fieldDescription="Rich popup details for each test application entry"
+                name="testApplicationDetails"
+                required="{Boolean}false"
+                renderType="fragmentreference-multiple"
+                valueType="string[]"
+                fragmentModelPath="/conf/4teradyne/settings/dam/cfm/models/product-popup-detail"/>
+
+        </items>
+    </jcr:content>
+</jcr:root>

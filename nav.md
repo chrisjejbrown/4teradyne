@@ -1,0 +1,52 @@
+- [Teradyne](/)
+
+---
+
+- **Products**
+  - [Defense & Aerospace](https://www.teradyne.com/defense-aerospace/)
+  - [Digital/Mixed Signal Test](https://www.teradyne.com/semiconductor-testing/)
+  - [Robotics](https://www.teradyne.com/robotics/)
+  - [Precision Power & Analog Test](https://www.teradyne.com/semiconductor-testing/)
+  - [Memory Test](https://www.teradyne.com/application-pages/memory/)
+  - [Production Board Test](https://www.teradyne.com/applications/production-board-test-application/)
+  - [Silicon Photonics Test](https://www.teradyne.com/silicon-photonics-testing/)
+  - [System Level Test](https://www.teradyne.com/system-level-test/)
+  - [Storage Test](https://www.teradyne.com/storage-test/)
+  - [Wireless Test](https://www.teradyne.com/wireless-testing/)
+- **Applications**
+  - [Defense & Aerospace](https://www.teradyne.com/defense-aerospace/)
+  - [Memory Test](https://www.teradyne.com/application-pages/memory/)
+  - [Production Board Test](https://www.teradyne.com/applications/production-board-test-application/)
+  - [Robotics](https://www.teradyne.com/robotics/)
+  - [Semiconductor Test](https://www.teradyne.com/semiconductor-testing/)
+  - [Silicon Photonics Test](https://www.teradyne.com/silicon-photonics-testing/)
+  - [Storage Test](https://www.teradyne.com/storage-test/)
+  - [System Level Test](https://www.teradyne.com/system-level-test/)
+  - [Wireless Test](https://www.teradyne.com/wireless-testing/)
+- **Services**
+  - [Applications Support](https://www.teradyne.com/application-assistance/)
+  - [Engineering Services](https://www.teradyne.com/teradyne-engineering-services/)
+  - [Software Solutions](https://www.teradyne.com/services/teradyne-software-services/)
+  - [Production Board Test Parts Services](https://www.teradyne.com/pbt-parts-services/)
+  - [Defense & Aerospace Services](https://www.teradyne.com/defense-aerospace-services-support/)
+- **Support**
+  - [eKnowledge](https://www.teradyne.com/eknowledge/)
+  - [Training](https://www.teradyne.com/support/teradyne-link-programs/)
+  - [Production Board Test Support](https://www.teradyne.com/teradyne-support-network/)
+  - [Defense & Aerospace Support](https://www.teradyne.com/defense-aerospace-contact-us/)
+  - [TUGx](https://www.teradyne.com/tugx/)
+- **Company**
+  - [About Us](https://www.teradyne.com/company/about-us/)
+  - [Investor Relations](https://investors.teradyne.com)
+  - [Newsroom](https://www.teradyne.com/company/newsroom/)
+  - [Blog](https://www.teradyne.com/company/blog/)
+  - [Careers](https://jobs.teradyne.com/)
+  - [Corporate Social Responsibility](https://www.teradyne.com/company/corporate-social-responsibility/)
+  - [Contact Us](https://www.teradyne.com/company/contact-teradyne/)
+  - [Management Team](https://investors.teradyne.com/corporate-governance/management-team)
+  - [Grant Program](https://www.teradyne.com/grant-program/)
+
+---
+
+- [eKnowledge](http://eknowledge.teradyne.com/)
+- [Search](#)

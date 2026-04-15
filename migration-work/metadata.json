@@ -1,0 +1,145 @@
+{
+  "url": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+  "timestamp": "2026-04-15T14:27:14.656Z",
+  "paths": {
+    "documentPath": "/defense-and-aerospace-product-explorer/index",
+    "htmlFilePath": "content/defense-and-aerospace-product-explorer/index.plain.html",
+    "mdFilePath": "content/defense-and-aerospace-product-explorer/index.md",
+    "dirPath": "content/defense-and-aerospace-product-explorer",
+    "filename": "index",
+    "previewPath": "/content/defense-and-aerospace-product-explorer/index"
+  },
+  "screenshot": "migration-work/screenshot.png",
+  "html": {
+    "filePath": "migration-work/cleaned.html",
+    "size": 728030
+  },
+  "metadata": {
+    "title": "Defense and Aerospace Product Explorer | Teradyne",
+    "viewport": "width=device-width, initial-scale=1",
+    "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    "og:locale": "en_US",
+    "og:type": "article",
+    "og:title": "Defense and Aerospace Product Explorer | Teradyne",
+    "og:url": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+    "og:site_name": "Teradyne",
+    "article:publisher": "https://www.facebook.com/TeradyneInc",
+    "twitter:card": "summary_large_image",
+    "twitter:site": "@teradyneinc",
+    "generator": "NitroPack",
+    "canonical": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+          "url": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+          "name": "Defense and Aerospace Product Explorer | Teradyne",
+          "isPartOf": {
+            "@id": "https://www.teradyne.com/#website"
+          },
+          "datePublished": "2024-07-17T15:38:59+00:00",
+          "breadcrumb": {
+            "@id": "https://www.teradyne.com/defense-and-aerospace-product-explorer/#breadcrumb"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": [
+            {
+              "@type": "ReadAction",
+              "target": [
+                "https://www.teradyne.com/defense-and-aerospace-product-explorer/"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.teradyne.com/defense-and-aerospace-product-explorer/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://www.teradyne.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Defense and Aerospace Product Explorer"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.teradyne.com/#website",
+          "url": "https://www.teradyne.com/",
+          "name": "Teradyne",
+          "description": "",
+          "publisher": {
+            "@id": "https://www.teradyne.com/#organization"
+          },
+          "potentialAction": [
+            {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.teradyne.com/?s={search_term_string}"
+              },
+              "query-input": {
+                "@type": "PropertyValueSpecification",
+                "valueRequired": true,
+                "valueName": "search_term_string"
+              }
+            }
+          ],
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://www.teradyne.com/#organization",
+          "name": "Teradyne",
+          "url": "https://www.teradyne.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://www.teradyne.com/#/schema/logo/image/",
+            "url": "https://www.teradyne.com/wp-content/uploads/2022/01/teradyne-logo.svg",
+            "contentUrl": "https://www.teradyne.com/wp-content/uploads/2022/01/teradyne-logo.svg",
+            "width": "1024",
+            "height": "1024",
+            "caption": "Teradyne"
+          },
+          "image": {
+            "@id": "https://www.teradyne.com/#/schema/logo/image/"
+          },
+          "sameAs": [
+            "https://www.facebook.com/TeradyneInc",
+            "https://x.com/teradyneinc",
+            "https://www.linkedin.com/company/teradyne",
+            "http://www.youtube.com/teradyneinc"
+          ]
+        }
+      ]
+    }
+  },
+  "images": {
+    "count": 6,
+    "mapping": {
+      "https://cdn-ilehcci.nitrocdn.com/eoGmUZCMaguCqwHURWCEmTNzNhuuAlBj/assets/images/optimized/rev-1a40885/www.teradyne.com/wp-content/themes/teradyne/assets/images/xtwitter.svg": "./images/7a6c794bfe730f9513a863e12556dc37.png",
+      "https://cdn-ilehcci.nitrocdn.com/eoGmUZCMaguCqwHURWCEmTNzNhuuAlBj/assets/images/source/rev-1a40885/www.teradyne.com/wp-content/uploads/2026/03/teradyne-logo-blue.svg": "./images/4015d5d768ea71905dd42c90df586bd9.png",
+      "https://cdn-ilehcci.nitrocdn.com/eoGmUZCMaguCqwHURWCEmTNzNhuuAlBj/assets/images/source/rev-1a40885/www.teradyne.com/wp-content/uploads/2022/08/Teradyne-logo-white-2.svg": "./images/c9e5573873d3e9a91c4e19958d03cdd9.png",
+      "https://cdn-ilehcci.nitrocdn.com/eoGmUZCMaguCqwHURWCEmTNzNhuuAlBj/assets/images/source/rev-1a40885/www.teradyne.com/wp-content/uploads/2026/03/tugx-logo-color.svg": "./images/e3f2d649c4cd8ea258667858cf067259.png",
+      "https://forms-na1.hsforms.com/embed/v3/counters.gif?key=forms-embed-v2-DEFINITION_SUCCESS&count=1": "./images/f7b7dc6e71a86b7ea44b06b1f086c063.png",
+      "https://forms-na1.hsforms.com/embed/v3/counters.gif?key=forms-embed-v2-RENDER_SUCCESS&count=1": "./images/a409778b5eb80a116e15575e684e8a9a.png"
+    },
+    "stats": {
+      "total": 6,
+      "converted": 6,
+      "skipped": 0,
+      "failed": 0,
+      "tooLarge": 0,
+      "limitReached": 0
+    }
+  }
+}

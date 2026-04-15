@@ -1,0 +1,120 @@
+{
+  "url": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+  "title": "Defense and Aerospace Product Explorer | Teradyne",
+  "analysisDate": "2026-04-15",
+  "sections": [
+    {
+      "id": "section-1",
+      "name": "Breadcrumb & Product Explorer Content",
+      "selector": "section.content-area",
+      "style": null,
+      "blocks": [
+        {
+          "blockName": "embed",
+          "description": "The main page content is an interactive React-based product explorer/finder app rendered client-side into #product-finder-root. In EDS, this would be best represented as an Embed block that loads the product explorer application. The static HTML contains only an empty div - all content is JavaScript-rendered.",
+          "selector": "#product-finder-root",
+          "contentModel": {
+            "rows": [
+              {
+                "cells": ["https://www.teradyne.com/defense-and-aerospace-product-explorer/"]
+              }
+            ]
+          }
+        }
+      ],
+      "defaultContent": [
+        {
+          "description": "Breadcrumb navigation (Home > Defense and Aerospace Product Explorer)",
+          "selector": "#breadcrumbs_container",
+          "type": "navigation-breadcrumb",
+          "note": "Breadcrumbs are typically handled by EDS metadata/navigation, not as authored content"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "title": "Defense and Aerospace Product Explorer | Teradyne",
+    "og:title": "Defense and Aerospace Product Explorer | Teradyne",
+    "og:type": "article",
+    "og:url": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+    "og:site_name": "Teradyne",
+    "canonical": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+    "twitter:card": "summary_large_image",
+    "twitter:site": "@teradyneinc",
+    "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  },
+  "header": {
+    "description": "Site header with gradient teal/dark background. Contains Teradyne white logo, top bar utility links (eKnowledge, Language selector, Search), and primary navigation (Products, Applications, Services, Support, Company). The header and navigation are shared site-wide and managed via nav.html in EDS.",
+    "logo": {
+      "src": "https://www.teradyne.com/wp-content/uploads/2022/08/Teradyne-logo-white-2.svg",
+      "alt": "Teradyne",
+      "localPath": "./images/c9e5573873d3e9a91c4e19958d03cdd9.png"
+    },
+    "navigation": {
+      "primary": [
+        {"label": "Products", "url": "#", "hasDropdown": true},
+        {"label": "Applications", "url": "#", "hasDropdown": true},
+        {"label": "Services", "url": "#", "hasDropdown": true},
+        {"label": "Support", "url": "#", "hasDropdown": true},
+        {"label": "Company", "url": "#", "hasDropdown": true}
+      ],
+      "utility": [
+        {"label": "eKnowledge", "url": "#"},
+        {"label": "Language", "url": "#", "hasDropdown": true},
+        {"label": "Search", "url": "#"}
+      ]
+    }
+  },
+  "footer": {
+    "description": "Site footer with Teradyne blue logo, two-column layout: left column has footer nav links, right column has newsletter signup (HubSpot form) and social media links. Bottom bar has copyright and secondary links.",
+    "logo": {
+      "src": "https://www.teradyne.com/wp-content/uploads/2026/03/teradyne-logo-blue.svg",
+      "alt": "Teradyne",
+      "localPath": "./images/4015d5d768ea71905dd42c90df586bd9.png"
+    },
+    "navigation": [
+      {"label": "About Us", "url": "/company/about-us/"},
+      {"label": "Careers", "url": "/company/careers/"},
+      {"label": "Corporate Social Responsibility", "url": "/company/corporate-social-responsibility/"},
+      {"label": "Blog", "url": "/company/blog/"},
+      {"label": "Investor Relations", "url": "https://investors.teradyne.com/"},
+      {"label": "Contact Us", "url": "https://www.teradyne.com/company/contact-teradyne/"},
+      {"label": "Management", "url": "https://investors.teradyne.com/corporate-governance/management-team"},
+      {"label": "Newsroom", "url": "/company/newsroom/"}
+    ],
+    "newsletter": {
+      "heading": "Stay up-to-date with the latest Teradyne news. Subscribe here.",
+      "provider": "HubSpot",
+      "formId": "hbspt-form-0a70647c-a37c-48d2-99e8-e7eec6753b38"
+    },
+    "socialMedia": [
+      {"platform": "X/Twitter", "url": "https://twitter.com/teradyneinc"},
+      {"platform": "LinkedIn", "url": "https://www.linkedin.com/company/teradyne"},
+      {"platform": "YouTube", "url": "http://www.youtube.com/teradyneinc"},
+      {"platform": "Facebook", "url": "https://www.facebook.com/TeradyneInc"}
+    ],
+    "tugx": {
+      "logo": "https://www.teradyne.com/wp-content/uploads/2026/03/tugx-logo-color.svg",
+      "url": "https://www.teradyne.com/tugx/"
+    },
+    "copyright": "© Teradyne Inc. 1994-2026. All rights reserved.",
+    "secondaryLinks": [
+      {"label": "Sitemap", "url": "/sitemap/"},
+      {"label": "Cookie Policy", "url": "/cookie-policy/"},
+      {"label": "Privacy Policy", "url": "/privacy-policy/"}
+    ]
+  },
+  "blockVariants": [
+    {
+      "genericName": "embed",
+      "variantName": "embed",
+      "reason": "Standard embed block to reference the product explorer application. No custom variant needed - the vanilla embed block handles external content embedding."
+    }
+  ],
+  "notes": [
+    "The main page content is a React-rendered interactive product explorer (#product-finder-root) that cannot be statically migrated as HTML content.",
+    "The product explorer would need to be embedded as an external application or rebuilt as custom EDS blocks.",
+    "Header and footer are site-wide components managed separately in EDS (nav.html, footer.html).",
+    "The page has minimal static content - it's primarily the interactive app."
+  ]
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Template"
+          jcr:title="Product Popup Detail"
+          jcr:description="Rich popup content for supported bus or test application entries with heading, description, related instruments, CTA, and image"
+          ranking="{Long}300"
+          status="enabled">
+    <jcr:content jcr:primaryType="dam:cfm/models/formbuilderconfig">
+        <items jcr:primaryType="nt:unstructured">
+
+            <heading
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Heading"
+                fieldDescription="Popup heading displayed at top of detail overlay (e.g., Data-Intensive Testing, AESA Radar Test)"
+                name="heading"
+                required="{Boolean}true"
+                renderType="textfield"
+                valueType="string"/>
+
+            <details
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Details"
+                fieldDescription="Detailed description of the capability or test application"
+                name="details"
+                required="{Boolean}false"
+                renderType="textarea-richtext"
+                valueType="string"/>
+
+            <relatedInstrumentsHeading
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Related Instruments Heading"
+                fieldDescription="Subheading for the related instruments section"
+                name="relatedInstrumentsHeading"
+                required="{Boolean}false"
+                renderType="textfield"
+                valueType="string"
+                defaultValue="Related Instruments"/>
+
+            <relatedInstruments
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Related Instruments"
+                fieldDescription="HTML list of related instruments for this capability"
+                name="relatedInstruments"
+                required="{Boolean}false"
+                renderType="textarea-richtext"
+                valueType="string"/>
+
+            <ctaLabel
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="CTA Button Label"
+                fieldDescription="Label for the call-to-action button in the popup"
+                name="ctaLabel"
+                required="{Boolean}false"
+                renderType="textfield"
+                valueType="string"/>
+
+            <ctaUrl
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="CTA Button URL"
+                fieldDescription="URL for the call-to-action button"
+                name="ctaUrl"
+                required="{Boolean}false"
+                renderType="textfield"
+                valueType="string"/>
+
+            <image
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/contentreference"
+                fieldLabel="Popup Image"
+                fieldDescription="Optional image displayed in the popup detail view"
+                name="image"
+                required="{Boolean}false"
+                renderType="contentreference"
+                valueType="string"
+                rootPath="/content/dam/4teradyne/defense-aerospace/product-explorer"/>
+
+        </items>
+    </jcr:content>
+</jcr:root>

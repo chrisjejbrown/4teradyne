@@ -1,0 +1,78 @@
+{
+  "$schema": "https://ns.adobe.com/aem/cf-model/1.0",
+  "title": "Product Explorer Filter Configuration",
+  "description": "Defines which filter columns are visible per category and their display options. Maps to the WP inline productFinderFilters JS config.",
+  "modelPath": "/conf/4teradyne/settings/dam/cfm/models/filter-configuration",
+  "fields": [
+    {
+      "id": "filterName",
+      "type": "text",
+      "required": true,
+      "label": "Filter Name",
+      "description": "Internal identifier for this filter (matches product field names)",
+      "examples": [
+        "platform",
+        "physicalInterface",
+        "numberOfChannels",
+        "supportedBus",
+        "testApplications",
+        "swDefined",
+        "ce",
+        "function",
+        "resolution",
+        "analogBandwidth",
+        "sampleRate"
+      ]
+    },
+    {
+      "id": "displayLabel",
+      "type": "text",
+      "required": true,
+      "label": "Display Label",
+      "description": "Column header text shown in the explorer UI",
+      "examples": [
+        "Platform",
+        "Physical Interface",
+        "Number of Channels",
+        "Supported Bus",
+        "Test Applications",
+        "SW-Defined",
+        "CE",
+        "Function",
+        "Resolution",
+        "Analog Bandwidth",
+        "Maximum Sample Rate"
+      ]
+    },
+    {
+      "id": "filterType",
+      "type": "enumeration",
+      "required": true,
+      "label": "Filter Type",
+      "description": "UI control type for this filter",
+      "options": [
+        "multi-select",
+        "single-select",
+        "boolean",
+        "range"
+      ],
+      "default": "multi-select"
+    },
+    {
+      "id": "options",
+      "type": "text",
+      "multi": true,
+      "required": false,
+      "label": "Filter Options",
+      "description": "Predefined option values for this filter (for multi-select and single-select types). Leave empty for boolean filters."
+    },
+    {
+      "id": "sortOrder",
+      "type": "number",
+      "required": false,
+      "label": "Sort Order",
+      "description": "Display order of this filter column (lower = leftmost)",
+      "default": 0
+    }
+  ]
+}

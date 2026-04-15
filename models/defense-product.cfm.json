@@ -1,0 +1,279 @@
+{
+  "$schema": "https://ns.adobe.com/aem/cf-model/1.0",
+  "title": "Defense & Aerospace Product",
+  "description": "Product entry for the Defense & Aerospace Product Explorer. Maps to WP custom post type 'finderproducts' with ACF fields.",
+  "modelPath": "/conf/4teradyne/settings/dam/cfm/models/defense-product",
+  "wpMapping": {
+    "postType": "finderproducts",
+    "apiEndpoint": "https://www.teradyne.com/wp-json/wp/v2/finderproducts",
+    "totalProducts": 71
+  },
+  "fields": [
+    {
+      "id": "productModel",
+      "type": "text",
+      "required": true,
+      "label": "Model Number",
+      "description": "Short model identifier displayed as the primary label in product cards",
+      "wpField": "acf.product-model",
+      "examples": [
+        "PXIe-25G",
+        "HSSub-6100",
+        "Verta-3020",
+        "Guardian",
+        "Spectrum BT",
+        "Di-Series",
+        "Ai-710"
+      ]
+    },
+    {
+      "id": "productName",
+      "type": "text",
+      "required": true,
+      "label": "Product Name",
+      "description": "Descriptive name (without model prefix), shown as subtitle in product cards",
+      "wpField": "acf.product-name",
+      "examples": [
+        "High Speed (100G) Avionics Network Test Instrument",
+        "Configurable RF/Microwave Test System",
+        "Optical Test and Switching Instrument"
+      ]
+    },
+    {
+      "id": "description",
+      "type": "text",
+      "required": true,
+      "label": "Description",
+      "description": "Short product summary shown in the explorer results",
+      "wpField": "acf.product_description",
+      "validation": {
+        "maxLength": 300
+      }
+    },
+    {
+      "id": "image",
+      "type": "content-reference",
+      "required": false,
+      "label": "Product Image",
+      "description": "Product photo or rendering displayed in the explorer card",
+      "wpField": "image (direct URL) or featured_media (WP media ID)",
+      "rootPath": "/content/dam/4teradyne/products"
+    },
+    {
+      "id": "category",
+      "type": "fragment-reference",
+      "required": true,
+      "label": "Product Category",
+      "description": "The primary product category this product belongs to",
+      "wpField": "product_finder_cat[0]",
+      "fragmentModel": "/conf/4teradyne/settings/dam/cfm/models/product-category"
+    },
+    {
+      "id": "searchWeight",
+      "type": "number",
+      "required": false,
+      "label": "Search Weight",
+      "description": "Sort priority within category results. Lower number = higher priority (1-37 range in source data).",
+      "wpField": "acf.product-search-weight",
+      "default": 10
+    },
+    {
+      "id": "brochureLabel",
+      "type": "text",
+      "required": false,
+      "label": "Brochure Button Label",
+      "description": "CTA button text for the brochure/datasheet link",
+      "wpField": "acf.product-brochure.title",
+      "default": "Learn More"
+    },
+    {
+      "id": "brochureUrl",
+      "type": "text",
+      "required": false,
+      "label": "Brochure URL",
+      "description": "Link to product brochure PDF, HubSpot form, or external product page",
+      "wpField": "acf.product-brochure.url",
+      "examples": [
+        "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf",
+        "https://share.hsforms.com/1_v7A9kR9SralgEs0Nw8bVQ67m7"
+      ]
+    },
+    {
+      "id": "brochureTarget",
+      "type": "enumeration",
+      "required": false,
+      "label": "Brochure Link Target",
+      "description": "Whether brochure opens in new tab",
+      "wpField": "acf.product-brochure.target",
+      "options": ["_self", "_blank"],
+      "default": "_blank"
+    },
+
+    {
+      "_comment": "=== FILTER FIELDS ===",
+      "_description": "These fields drive the product explorer's faceted filtering. Each maps to a WP ACF filter field."
+    },
+
+    {
+      "id": "platformFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Platform",
+      "description": "Hardware platform form factors this product supports",
+      "wpField": "acf.platform_filter",
+      "options": ["PXI", "PXIe", "LXI", "VXI"]
+    },
+    {
+      "id": "physicalInterfaceFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Physical Interface",
+      "description": "Connection types: copper or optical",
+      "wpField": "acf.physical_interface_filter",
+      "options": ["Copper", "Optical"]
+    },
+    {
+      "id": "swDefinedFilter",
+      "type": "boolean",
+      "required": false,
+      "label": "Software-Defined",
+      "description": "Whether the instrument is software-defined/reconfigurable",
+      "wpField": "acf.sw-defined_filter",
+      "default": false
+    },
+    {
+      "id": "ceFilter",
+      "type": "boolean",
+      "required": false,
+      "label": "CE Certified",
+      "description": "CE compliance/certification flag",
+      "wpField": "acf.ce_filter",
+      "default": false
+    },
+    {
+      "id": "supportedBusFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Supported Bus Protocols",
+      "description": "Bus protocols this product supports (used for filtering)",
+      "wpField": "acf.supported_bus_filter",
+      "options": [
+        "Ethernet", "Fibre Channel", "MIL-STD-1553", "ARINC 429",
+        "ARINC 708", "ARINC 818", "AS5643 Mil-FireWire Instrument",
+        "RS-485", "RS-422", "RS-232", "IRIG-B", "PRBS",
+        "HOTLink", "USB 2.0", "USB 3.0", "eSATA", "I2C", "GPIO",
+        "sFPDP", "Aurora", "SRIO", "PCIe",
+        "LVTTL", "LVDS", "M-LVDS", "SPI", "PCI",
+        "Multi-Gigabit Transceiver (MGT)", "1149.1 Boundary Scan",
+        "Programmable Digital I/O", "Custom parallel bus"
+      ]
+    },
+    {
+      "id": "testApplicationsFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Test Applications",
+      "description": "Test application scenarios this product supports (used for filtering)",
+      "wpField": "acf.test_applications_filter",
+      "options": [
+        "Network communications", "Data Intensive Testing", "AESA Radar",
+        "Custom bus test", "Video processing", "Optical Test",
+        "Optical Switching", "Copper to optical conversion", "Flight test",
+        "Parallel digital functional test", "Boundary scan", "FLASH Programming",
+        "Concurrent parallel and serial bus test",
+        "Field and Operational-level (O-level) test", "Flightline test",
+        "Manufacturing", "Intermediate-level (I-level) test and repair",
+        "Depot (D-level) test and repair", "Multi-site manufacturing and depot",
+        "Design verification", "System integration", "Product troubleshooting"
+      ]
+    },
+    {
+      "id": "numberOfChannelsFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Number of Channels",
+      "description": "Channel count (for Analog, Optical, Switching, Parallel Digital categories)",
+      "wpField": "acf.number_of_channels_filter",
+      "options": ["2", "4", "8", "12", "16", "20", "32", "48", "64", "72", "96"]
+    },
+    {
+      "id": "functionFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Instrument Function",
+      "description": "Instrument function type (Analog Test category only)",
+      "wpField": "acf.function_filter",
+      "options": [
+        "Digital Sampling Oscilloscope",
+        "Arbitrary/Function Waveform Generator",
+        "Multifunction Analog Measurements",
+        "Digitizer",
+        "Timer/Counter",
+        "Digital Multimeter",
+        "Limit Detector"
+      ]
+    },
+    {
+      "id": "resolutionFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Resolution",
+      "description": "ADC/DAC resolution (Analog Test category only)",
+      "wpField": "acf.resolution_filter",
+      "options": ["8 bit", "12 bit", "14 bit"]
+    },
+    {
+      "id": "analogBandwidthFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Analog Bandwidth",
+      "description": "Analog bandwidth (Analog Test category only)",
+      "wpField": "acf.analog_bandwidth_filter",
+      "options": ["50 MHz", "300 MHz", "500 MHz", "1 GHz"]
+    },
+    {
+      "id": "sampleRateFilter",
+      "type": "enumeration",
+      "multi": true,
+      "required": false,
+      "label": "Maximum Sample Rate",
+      "description": "Maximum sample rate (Analog Test category only)",
+      "wpField": "acf.sample_rate_filter",
+      "options": ["200 MS/s", "800 MS/s", "1 GS/s", "2 GS/s", "4 GS/s"]
+    },
+
+    {
+      "_comment": "=== RICH CONTENT TABLES ===",
+      "_description": "These reference popup detail fragments for the supported bus and test application detail overlays."
+    },
+
+    {
+      "id": "supportedBusDetails",
+      "type": "fragment-reference",
+      "multi": true,
+      "required": false,
+      "label": "Supported Bus Details",
+      "description": "Rich popup details for each supported bus entry (heading, description, related instruments, CTA, image)",
+      "wpField": "acf.supported_bus_table",
+      "fragmentModel": "/conf/4teradyne/settings/dam/cfm/models/product-popup-detail"
+    },
+    {
+      "id": "testApplicationDetails",
+      "type": "fragment-reference",
+      "multi": true,
+      "required": false,
+      "label": "Test Application Details",
+      "description": "Rich popup details for each test application entry",
+      "wpField": "acf.typical_test_applications_table",
+      "fragmentModel": "/conf/4teradyne/settings/dam/cfm/models/product-popup-detail"
+    }
+  ]
+}

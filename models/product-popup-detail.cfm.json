@@ -1,0 +1,64 @@
+{
+  "$schema": "https://ns.adobe.com/aem/cf-model/1.0",
+  "title": "Product Popup Detail",
+  "description": "Rich popup content for supported bus or test application entries (maps to WP ACF supported_bus_table and typical_test_applications_table items)",
+  "modelPath": "/conf/4teradyne/settings/dam/cfm/models/product-popup-detail",
+  "fields": [
+    {
+      "id": "heading",
+      "type": "text",
+      "required": true,
+      "label": "Heading",
+      "description": "Popup heading displayed at top of detail overlay",
+      "examples": [
+        "Data-Intensive Testing",
+        "AESA Radar Test",
+        "MIL-STD-1553 Bus Test"
+      ]
+    },
+    {
+      "id": "details",
+      "type": "rich-text",
+      "required": false,
+      "label": "Details",
+      "description": "Detailed description of the capability or test application"
+    },
+    {
+      "id": "relatedInstrumentsHeading",
+      "type": "text",
+      "required": false,
+      "label": "Related Instruments Heading",
+      "description": "Subheading for the related instruments section",
+      "default": "Related Instruments"
+    },
+    {
+      "id": "relatedInstruments",
+      "type": "rich-text",
+      "required": false,
+      "label": "Related Instruments",
+      "description": "HTML list of related instruments for this capability"
+    },
+    {
+      "id": "ctaLabel",
+      "type": "text",
+      "required": false,
+      "label": "CTA Button Label",
+      "description": "Label for the call-to-action button in the popup"
+    },
+    {
+      "id": "ctaUrl",
+      "type": "text",
+      "required": false,
+      "label": "CTA Button URL",
+      "description": "URL for the call-to-action button"
+    },
+    {
+      "id": "image",
+      "type": "content-reference",
+      "required": false,
+      "label": "Popup Image",
+      "description": "Optional image displayed in the popup detail view",
+      "rootPath": "/content/dam/4teradyne/defense-aerospace/product-explorer"
+    }
+  ]
+}

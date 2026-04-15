@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Template"
+          jcr:title="Product Category"
+          jcr:description="Defense &amp; Aerospace product category for the product explorer (maps to WP taxonomy product_finder_cat)"
+          ranking="{Long}200"
+          status="enabled">
+    <jcr:content jcr:primaryType="dam:cfm/models/formbuilderconfig">
+        <items jcr:primaryType="nt:unstructured">
+
+            <name
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Category Name"
+                fieldDescription="Display name of the product category (e.g., Serial Bus Test, Analog Test)"
+                name="name"
+                required="{Boolean}true"
+                renderType="textfield"
+                valueType="string"/>
+
+            <slug
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
+                fieldLabel="Slug"
+                fieldDescription="URL-safe identifier in kebab-case (e.g., serial-bus-test)"
+                name="slug"
+                required="{Boolean}true"
+                renderType="textfield"
+                valueType="string"/>
+
+            <sortOrder
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/numberfield"
+                fieldLabel="Sort Order"
+                fieldDescription="Display order in the category tabs (lower = first)"
+                name="sortOrder"
+                required="{Boolean}false"
+                renderType="numberfield"
+                valueType="long"
+                defaultValue="0"/>
+
+            <visibleFilters
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="dam/cfm/models/editor/components/tags"
+                fieldLabel="Visible Filters"
+                fieldDescription="Which filter columns to show when this category is active. Values: platform, physicalInterface, numberOfChannels, supportedBus, testApplications, swDefined, ce, function, resolution, analogBandwidth, sampleRate"
+                name="visibleFilters"
+                required="{Boolean}true"
+                renderType="tags"
+                valueType="string[]"/>
+
+        </items>
+    </jcr:content>
+</jcr:root>

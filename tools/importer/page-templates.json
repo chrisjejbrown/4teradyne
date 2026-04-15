@@ -1,0 +1,31 @@
+{
+  "templates": [
+    {
+      "name": "product-explorer-page",
+      "urls": [
+        "https://www.teradyne.com/defense-and-aerospace-product-explorer/"
+      ],
+      "description": "Defense and Aerospace product explorer page with interactive product filtering and browsing",
+      "blocks": [
+        {
+          "name": "embed",
+          "instances": [
+            "#product-finder-root"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-main-content",
+          "name": "Product Explorer Content",
+          "selector": "section.content-area .entry-content",
+          "style": null,
+          "blocks": [
+            "embed"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

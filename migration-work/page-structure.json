@@ -1,0 +1,117 @@
+{
+  "url": "https://www.teradyne.com/defense-and-aerospace-product-explorer/",
+  "title": "Defense and Aerospace Product Explorer | Teradyne",
+  "sections": [
+    {
+      "id": "section-header",
+      "name": "Header / Navigation",
+      "selector": "header#masthead.site-header",
+      "style": null,
+      "description": "Site header with Teradyne logo, top bar (eKnowledge, Language selector, Search), and main navigation (Products, Applications, Services, Support, Company). Gradient teal/dark background.",
+      "contentSequences": [
+        {
+          "id": "cs-logo",
+          "description": "Teradyne logo linking to homepage",
+          "selector": ".module.left.site-title-container a img",
+          "type": "image"
+        },
+        {
+          "id": "cs-topbar-links",
+          "description": "Top bar utility links: eKnowledge, Language dropdown, Search",
+          "selector": "#topBar .btn-container",
+          "type": "navigation"
+        },
+        {
+          "id": "cs-main-nav",
+          "description": "Primary navigation menu: Products, Applications, Services, Support, Company",
+          "selector": "#primary-menu",
+          "type": "navigation"
+        }
+      ]
+    },
+    {
+      "id": "section-breadcrumb",
+      "name": "Breadcrumb",
+      "selector": "#breadcrumbs_container",
+      "style": null,
+      "description": "Breadcrumb trail: Home > Defense and Aerospace Product Explorer",
+      "contentSequences": [
+        {
+          "id": "cs-breadcrumb",
+          "description": "Breadcrumb navigation",
+          "selector": "#breadcrumbs",
+          "type": "navigation"
+        }
+      ]
+    },
+    {
+      "id": "section-main-content",
+      "name": "Product Explorer App",
+      "selector": "section.content-area .entry-content",
+      "style": null,
+      "description": "Main content area containing the Product Finder React application (interactive product explorer/filter). The div#product-finder-root is empty in static HTML - it's a client-side rendered JavaScript application for browsing defense and aerospace products.",
+      "contentSequences": [
+        {
+          "id": "cs-product-finder",
+          "description": "React-based product finder/explorer application (client-rendered)",
+          "selector": "#product-finder-root",
+          "type": "interactive-app"
+        }
+      ]
+    },
+    {
+      "id": "section-footer",
+      "name": "Footer",
+      "selector": "footer",
+      "style": null,
+      "description": "Site footer with Teradyne logo, footer navigation links (About Us, Careers, CSR, Blog, Investor Relations, Contact Us, Management, Newsroom), newsletter signup form (HubSpot), social media links (X/Twitter, LinkedIn, YouTube, Facebook), TugX logo, copyright, and secondary footer links (Sitemap, Cookie Policy, Privacy Policy).",
+      "contentSequences": [
+        {
+          "id": "cs-footer-logo",
+          "description": "Teradyne blue logo",
+          "selector": ".footer-logo img",
+          "type": "image"
+        },
+        {
+          "id": "cs-footer-nav",
+          "description": "Footer navigation links: About Us, Careers, CSR, Blog, Investor Relations, Contact Us, Management, Newsroom",
+          "selector": "#menu-footer-menu",
+          "type": "navigation"
+        },
+        {
+          "id": "cs-newsletter",
+          "description": "Newsletter signup form (HubSpot embedded)",
+          "selector": ".footer-newsletter",
+          "type": "form"
+        },
+        {
+          "id": "cs-social-media",
+          "description": "Social media links: X/Twitter, LinkedIn, YouTube, Facebook",
+          "selector": ".social-media-links-container",
+          "type": "navigation"
+        },
+        {
+          "id": "cs-tugx-logo",
+          "description": "TugX logo linking to /tugx/",
+          "selector": "#footer_social_media .wpb_single_image a",
+          "type": "image-link"
+        },
+        {
+          "id": "cs-copyright",
+          "description": "Copyright notice: Teradyne Inc. 1994-2026",
+          "selector": ".copyright",
+          "type": "text"
+        },
+        {
+          "id": "cs-secondary-footer",
+          "description": "Secondary footer links: Sitemap, Cookie Policy, Privacy Policy",
+          "selector": ".secondary_footer_menu_container",
+          "type": "navigation"
+        }
+      ]
+    }
+  ],
+  "blockInventory": {
+    "note": "This page's main content is a React-rendered interactive product explorer app. The static HTML has an empty #product-finder-root div. The page primarily consists of header, an empty content area (JS app), and footer. No traditional EDS blocks are needed for the main content area since it's an interactive application."
+  }
+}

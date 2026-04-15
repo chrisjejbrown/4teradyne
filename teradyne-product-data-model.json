@@ -1,0 +1,826 @@
+{
+  "dataSource": {
+    "type": "WordPress REST API - Custom Post Type",
+    "endpoint": "https://www.teradyne.com/wp-json/wp/v2/finderproducts?per_page=100",
+    "taxonomyEndpoint": "https://www.teradyne.com/wp-json/wp/v2/product_finder_cat",
+    "singleProductEndpoint": "https://www.teradyne.com/wp-json/wp/v2/finderproducts/{id}",
+    "relatedProductPages": "https://www.teradyne.com/wp-json/wp/v2/products?per_page=100&product_cat=35",
+    "notes": "The React app at #product-finder-root fetches data from the WP REST API custom post type 'finderproducts'. The page also references productFinderFilters inline JS config that defines which filter columns appear per category."
+  },
+  "taxonomy": {
+    "name": "product_finder_cat",
+    "terms": [
+      { "id": 668, "name": "Analog Test", "slug": "analog-test", "count": 35, "parent": 0 },
+      { "id": 669, "name": "Configurable Test Systems", "slug": "configurable-test-systems", "count": 4, "parent": 0 },
+      { "id": 670, "name": "Optical Test", "slug": "optical-test", "count": 5, "parent": 0 },
+      { "id": 671, "name": "Parallel Digital Test", "slug": "parallel-digital-test", "count": 5, "parent": 0 },
+      { "id": 672, "name": "Serial Bus Test", "slug": "serial-bus-test", "count": 19, "parent": 0 },
+      { "id": 673, "name": "Switching", "slug": "switching", "count": 3, "parent": 0 }
+    ]
+  },
+  "filterConfigPerCategory": {
+    "Configurable Test Systems": ["Platform", "Test Applications"],
+    "Parallel Digital Test": ["Platform", "Number of Channels", "SW-Defined", "CE", "Supported Bus", "Test Applications"],
+    "Serial Bus Test": ["Platform", "Physical Interface", "SW-Defined", "CE", "Supported Bus", "Test Applications"],
+    "Optical Test": ["Platform", "Physical Interface", "Number of Channels", "Test Applications"],
+    "Switching": ["Platform", "Physical Interface", "Number of Channels", "Test Applications"],
+    "Analog Test": ["Function", "Resolution", "Number of Channels", "Analog Bandwidth", "Sample Rate"]
+  },
+  "productDataModel": {
+    "wpFields": {
+      "id": { "type": "integer", "description": "WordPress post ID" },
+      "date": { "type": "string", "format": "ISO 8601", "example": "2024-11-22T14:41:40" },
+      "modified": { "type": "string", "format": "ISO 8601" },
+      "slug": { "type": "string", "example": "high-speed-100g-avionics-network-test-instrument" },
+      "status": { "type": "string", "value": "publish" },
+      "type": { "type": "string", "value": "finderproducts" },
+      "link": { "type": "string", "format": "URL", "example": "https://www.teradyne.com/product-finder-products-pages/high-speed-100g-avionics-network-test-instrument/" },
+      "title.rendered": { "type": "string", "description": "Full display title", "example": "PXIe-25G High Speed Avionics Network Test Instrument" },
+      "author": { "type": "integer" },
+      "featured_media": { "type": "integer", "description": "WordPress media ID for product image" },
+      "product_finder_cat": { "type": "array[integer]", "description": "Array of taxonomy term IDs" },
+      "image": { "type": "string", "format": "URL", "description": "Direct image URL (convenience field)", "example": "https://www.teradyne.com/wp-content/uploads/2024/11/PXIe-25G.png" }
+    },
+    "acfFields": {
+      "product-model": {
+        "type": "string",
+        "description": "Short model identifier",
+        "examples": ["PXIe-25G", "HSSub-6100", "Verta-3020", "Guardian", "Spectrum BT", "ZT4628VXI", "Di-Series", "Ai-710"]
+      },
+      "product-name": {
+        "type": "string",
+        "description": "Descriptive product name (without model prefix)",
+        "example": "High Speed (100G) Avionics Network Test Instrument"
+      },
+      "product_description": {
+        "type": "string",
+        "description": "Short product description/summary",
+        "example": "PXI Express Instrument for test and simulation of Fibre Channel and Avionics Ethernet (10G/25G/40G/100G)."
+      },
+      "product-search-weight": {
+        "type": "integer",
+        "description": "Sort/priority weight for search results display order (lower = higher priority within category)",
+        "range": "1-37"
+      },
+      "product-brochure": {
+        "type": "object|string",
+        "description": "Link to product brochure/datasheet. Can be ACF link object or direct URL string",
+        "schema": {
+          "title": "string",
+          "url": "string (URL to PDF, HubSpot form, or external product page)",
+          "target": "string (e.g. '_blank' or '')"
+        },
+        "examples": [
+          "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf",
+          "https://share.hsforms.com/1_v7A9kR9SralgEs0Nw8bVQ67m7",
+          "https://aviftech.com/ait_products/pxie-25G/",
+          "https://www.teradyne.com/ai-710/"
+        ]
+      },
+      "additional_buttons": {
+        "type": "array|null",
+        "description": "Additional CTA buttons (rarely populated)"
+      },
+      "supported_bus_table": {
+        "type": "array[object]",
+        "description": "Supported bus details with optional popup information",
+        "itemSchema": {
+          "content": "string (HTML - list of supported buses)",
+          "has_popup": "boolean",
+          "popup_heading": "string",
+          "popup_details": "string (description of the test application)",
+          "popup_subheading": "string (e.g. 'Related Instruments')",
+          "popup_subcontent": "string (HTML - list of related instruments)",
+          "popup_button": "object|null|string ({ title, url, target })",
+          "popup_image": "integer|null (WordPress media ID)"
+        }
+      },
+      "typical_test_applications_table": {
+        "type": "array[object]",
+        "description": "Test application details with optional popup information",
+        "itemSchema": {
+          "content": "string (HTML - list of test applications)",
+          "has_popup": "boolean",
+          "popup_heading": "string (e.g. 'Data-Intensive Testing', 'AESA Radar Test')",
+          "popup_details": "string (detailed description)",
+          "popup_subheading": "string",
+          "popup_subcontent": "string (HTML - related instruments list)",
+          "popup_button": "object|string ({ title, url, target })",
+          "popup_image": "integer|null (WordPress media ID)"
+        }
+      },
+      "platform_filter": {
+        "type": "array[string]",
+        "description": "Platform form factor filter values",
+        "possibleValues": ["PXI", "PXIe", "LXI", "VXI"]
+      },
+      "physical_interface_filter": {
+        "type": "array[string]",
+        "description": "Physical connection type filter",
+        "possibleValues": ["Copper", "Optical"]
+      },
+      "sw-defined_filter": {
+        "type": "boolean",
+        "description": "Whether the instrument is software-defined/reconfigurable"
+      },
+      "ce_filter": {
+        "type": "boolean",
+        "description": "CE compliance/certification flag"
+      },
+      "supported_bus_filter": {
+        "type": "array[string]",
+        "description": "Filterable bus protocol values",
+        "possibleValues": [
+          "Ethernet", "Fibre Channel", "MIL-STD-1553", "ARINC 429", "ARINC 708", "ARINC 818",
+          "AS5643 Mil-FireWire Instrument", "RS-485", "RS-422", "RS-232", "IRIG-B",
+          "PRBS", "HOTLink", "USB 2.0", "USB 3.0", "eSATA", "I2C", "GPIO",
+          "sFPDP", "Aurora", "SRIO", "PCIe",
+          "LVTTL", "LVDS", "M-LVDS", "SPI", "PCI",
+          "Multi-Gigabit Transceiver (MGT)", "1149.1 Boundary Scan",
+          "Programmable Digital I/O", "Custom parallel bus"
+        ]
+      },
+      "test_applications_filter": {
+        "type": "array[string]",
+        "description": "Filterable test application values",
+        "possibleValues": [
+          "Network communications", "Data Intensive Testing", "AESA Radar",
+          "Custom bus test", "Video processing", "Optical Test", "Optical Switching",
+          "Copper to optical conversion", "Flight test",
+          "Parallel digital functional test", "Boundary scan", "FLASH Programming",
+          "Concurrent parallel and serial bus test",
+          "Field and Operational-level (O-level) test", "Flightline test",
+          "Manufacturing", "Intermediate-level (I-level) test and repair",
+          "Depot (D-level) test and repair", "Multi-site manufacturing and depot",
+          "Design verification"
+        ]
+      },
+      "number_of_channels_filter": {
+        "type": "array[string|integer]",
+        "description": "Channel count filter (for Analog, Optical, Switching, Parallel Digital categories)",
+        "examples": ["2", "4", "8", "16", "20", "32", "48", "64", "96"]
+      },
+      "function_filter": {
+        "type": "array[string]",
+        "description": "Instrument function filter (Analog Test category only)",
+        "possibleValues": ["Oscilloscope/Digitizer", "Arbitrary/Function Waveform Generator", "High Density Multifunction Parallel Analog Test Instrument"]
+      },
+      "resolution_filter": {
+        "type": "array[string]",
+        "description": "ADC/DAC resolution filter (Analog Test category only)",
+        "possibleValues": ["8-bit", "12-bit", "14-bit"]
+      },
+      "analog_bandwidth_filter": {
+        "type": "array[string]",
+        "description": "Analog bandwidth filter (Analog Test category only)",
+        "possibleValues": ["50 MHz", "300 MHz", "500 MHz", "1 GHz"]
+      },
+      "sample_rate_filter": {
+        "type": "array[string]",
+        "description": "Sample rate filter (Analog Test category only)",
+        "possibleValues": ["200 MS/s", "800 MS/s", "1 GS/s", "2 GS/s", "4 GS/s"]
+      }
+    }
+  },
+  "products": {
+    "serialBusTest": [
+      {
+        "id": 27348, "model": "PXIe-25G", "name": "High Speed (100G) Avionics Network Test Instrument",
+        "description": "PXI Express Instrument for test and simulation of Fibre Channel and Avionics Ethernet (10G/25G/40G/100G).",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["Ethernet", "Fibre Channel"],
+        "testApplications": ["Network communications", "Data Intensive Testing", "AESA Radar"],
+        "searchWeight": 9, "image": "https://www.teradyne.com/wp-content/uploads/2024/11/PXIe-25G.png",
+        "brochure": "https://aviftech.com/ait_products/pxie-25G/", "category": 672
+      },
+      {
+        "id": 27286, "model": "PXIe-1553", "name": "MIL-STD-1553 PXI Express Test & Simulation Instrument",
+        "description": "AIT's PXIe-1553 support testing, simulations, monitoring, and analysis of MIL-STD-1553 A/B data buses.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": false, "ce": false,
+        "supportedBus": ["IRIG-B"],
+        "testApplications": ["Network communications"],
+        "searchWeight": 9, "image": "https://www.teradyne.com/wp-content/uploads/2024/11/PXIe-1553.png",
+        "brochure": "https://aviftech.com/ait_products/pxie-1553/", "category": 672
+      },
+      {
+        "id": 27285, "model": "PXIe-C429", "name": "ARINC 429 PXI Express Test & Simulation Instrument",
+        "description": "AIT's PXIe-C429 is a family of standalone, flight-ready ARINC 429 interface test and simulation modules.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": false, "ce": false,
+        "supportedBus": ["IRIG-B", "PCIe"],
+        "testApplications": ["Network communications"],
+        "searchWeight": 9, "image": "https://www.teradyne.com/wp-content/uploads/2024/11/ARINC-429.png",
+        "brochure": "https://aviftech.com/ait_products/pxie-c429-2/", "category": 672
+      },
+      {
+        "id": 26038, "model": "HSSub-9110", "name": "RS232/IRIG-B/HotLink/ECL Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["RS-485", "RS-422", "RS-232", "IRIG-B", "PRBS", "HOTLink"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9110.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 26027, "model": "HSSub-9100", "name": "64-Pair RS485 Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["RS-485", "RS-422", "PRBS", "ARINC 708"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9100.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 26016, "model": "HSSub-9080", "name": "RS485/RS232/IRIG-B Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["RS-485", "RS-422", "RS-232", "IRIG-B", "ARINC 708"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9080.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 26005, "model": "HSSub-9070", "name": "HOTLINK/ECL Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["HOTLINK"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9070-1.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 25994, "model": "HSSub-9060", "name": "RS232/IRIG-B Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["RS-232"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9060-1.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 25983, "model": "HSSub-9050", "name": "ETHERNET/RS232/IRIG-B Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["Ethernet", "RS-232", "IRIG-B"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9050-1.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 25972, "model": "HSSub-9030", "name": "RS485/HOTLINK/ECL Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["Ethernet", "RS-485", "RS-422", "ARINC 708", "HOTLINK"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9030-1.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 25961, "model": "HSSub-9010", "name": "32-Pair RS485 Flexible I/O Instrument",
+        "description": "Multi-bus test instrument with user configurable FPGA, supporting standard RS, UARTS, and user-specific protocols.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["RS-485", "RS-422", "ARINC 708"],
+        "testApplications": ["Network communications", "Custom bus test"],
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-9010-1.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-9xxx-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 25950, "model": "HSSub-8030", "name": "Peripheral Bus Instrument (PBI)",
+        "description": "PXIe instrument providing common computer bus interfaces to mitigate the obsolescence risks of direct PC to UUT connections.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": false, "ce": false,
+        "supportedBus": ["Ethernet", "RS-232", "USB 2.0", "USB 3.0", "eSATA", "I2C", "GPIO"],
+        "testApplications": ["Network communications"],
+        "searchWeight": 6, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-8030.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/HSSub-8030-Peripheral-Bus-Instrument-Brochure.pdf", "category": 672
+      },
+      {
+        "id": 25939, "model": "HSSub-6091", "name": "10G Ethernet Instrument",
+        "description": "Ethernet capability on multiple concurrently operating ports up to 10 G operating speed, supporting copper and optical connections.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper", "Optical"], "swDefined": false, "ce": true,
+        "supportedBus": ["Ethernet"],
+        "testApplications": ["Network communications", "Data Intensive Testing"],
+        "searchWeight": 4, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6091_001.jpg",
+        "brochure": "https://share.hsforms.com/1fuQBovUPRP-aSS8WnHT93w67m7", "category": 672
+      },
+      {
+        "id": 25928, "model": "HSSub-6090", "name": "1G Ethernet Instrument",
+        "description": "Ethernet capability on multiple concurrently operating ports up to 1 G operating speed.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": false, "ce": false,
+        "supportedBus": ["Ethernet"],
+        "testApplications": ["Network communications"],
+        "searchWeight": 6, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6090-1.jpg",
+        "brochure": null, "category": 672
+      },
+      {
+        "id": 25898, "model": "HSSub-6120", "name": "AS5643 Mil-FireWire Instrument",
+        "description": "High Performance & High Density PXIe Instrument for Mil-FireWire Applications.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": false, "ce": true,
+        "supportedBus": ["AS5643 Mil-FireWire Instrument"],
+        "testApplications": ["Network communications"],
+        "searchWeight": 4, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6120_01.jpg",
+        "brochure": "https://share.hsforms.com/1Xp3J0IvzRf2Wehru4aIwGw67m7", "category": 672
+      },
+      {
+        "id": 25872, "model": "HSSub-6310", "name": "Streaming Storage Module",
+        "description": "High Capacity Reconfigurable PXIe Storage for Wide Range of Streaming Data Capture and Playback Test Applications.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": true,
+        "supportedBus": ["Fibre Channel", "sFPDP", "Aurora", "SRIO"],
+        "testApplications": ["Network communications", "Custom bus test", "Video processing", "Data Intensive Testing", "AESA Radar"],
+        "searchWeight": 2, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Teradyne_HSSub-6310.jpg",
+        "brochure": "https://share.hsforms.com/1V5UXFlcuQ7KYfMzK3m2Fvw67m7", "category": 672
+      },
+      {
+        "id": 25866, "model": "HSSub-6140", "name": "8G Hybrid I/O Instrument",
+        "description": "Software-defined PXIe test instrument for concurrently operating high-speed serial and parallel buses.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": true,
+        "supportedBus": ["LVTTL", "LVDS", "M-LVDS", "Multi-Gigabit Transceiver (MGT)", "1149.1 Boundary Scan", "I2C"],
+        "testApplications": ["Custom bus test", "AESA Radar", "Concurrent parallel and serial bus test", "Boundary scan", "FLASH Programming"],
+        "searchWeight": 3, "channels": ["20", "96"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6140-Angeled-Side.jpg",
+        "brochure": "https://share.hsforms.com/19HfoYQP6SIa1DCfoYHq_3A67m7", "category": 672
+      },
+      {
+        "id": 25840, "model": "HSSub-6100", "name": "12G Serial I/O Instrument",
+        "description": "Multi-port, software-defined PXIe instrument for high-speed serial bus test, up to 12.5 Gb/s, supporting a wide range of advanced aerospace and defense test applications.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper", "Optical"], "swDefined": true, "ce": true,
+        "supportedBus": ["Ethernet", "Fibre Channel", "sFPDP", "Aurora", "SRIO", "PCIe"],
+        "testApplications": ["Network communications", "Custom bus test", "Video processing", "Data Intensive Testing", "AESA Radar"],
+        "searchWeight": 1, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6100-12G.png",
+        "brochure": "https://share.hsforms.com/18E0NVnddRuuse0TvDEGCOg67m7", "category": 672
+      },
+      {
+        "id": 25787, "model": "HSSub-6065", "name": "Optical I/O Expansion Instrument",
+        "description": "4-Channel Copper to optical conversion for Multi-Gigabit serial buses.",
+        "platform": ["PXIe"], "physicalInterface": ["Optical"], "swDefined": false, "ce": false,
+        "supportedBus": ["Fibre Channel", "ARINC 818"],
+        "testApplications": ["Copper to optical conversion"],
+        "searchWeight": 9, "channels": ["4"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6065-1.jpg",
+        "brochure": null, "category": 672
+      }
+    ],
+    "opticalTest": [
+      {
+        "id": 26060, "model": "HSSub-6065", "name": "Optical I/O Expansion Instrument",
+        "description": "4-Channel Copper to optical conversion for Multi-Gigabit serial buses.",
+        "platform": ["PXIe"], "physicalInterface": ["Optical"], "channels": ["4"],
+        "testApplications": ["Copper to optical conversion"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6065-1.jpg", "category": 670
+      },
+      {
+        "id": 25781, "model": "Verta-5010", "name": "Wide-Range Optical Power Module, LXI Format",
+        "description": "8-port Wide-Range Power Module for optical testing featuring extended range power attenuation across the network operating range.",
+        "platform": ["LXI"], "physicalInterface": ["Optical"], "channels": ["8"],
+        "testApplications": ["Optical Test"],
+        "searchWeight": 4, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Verta-5010.jpg",
+        "brochure": "https://share.hsforms.com/1_v7A9kR9SralgEs0Nw8bVQ67m7", "category": 670
+      },
+      {
+        "id": 25775, "model": "Verta-3020", "name": "Optical Power and SwitchModule, LXI Format",
+        "description": "16-port adjustable optical power transmit and measurement for functional verification of network operations.",
+        "platform": ["LXI"], "physicalInterface": ["Optical"], "channels": ["16"],
+        "testApplications": ["Optical Test", "Optical Switching"],
+        "searchWeight": 2, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Verta-3020.png",
+        "brochure": "https://share.hsforms.com/1_v7A9kR9SralgEs0Nw8bVQ67m7", "category": 670
+      },
+      {
+        "id": 25769, "model": "Verta-3010", "name": "Multi-Protocol Switch Module, LXI Format",
+        "description": "16-port switching module supporting numerous SFP transceivers for multiple bus protocols from 100M to 10G.",
+        "platform": ["LXI"], "channels": ["16"],
+        "testApplications": ["Copper to optical conversion"],
+        "searchWeight": 3, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Verta-3010_03-1.png",
+        "brochure": "https://share.hsforms.com/1_v7A9kR9SralgEs0Nw8bVQ67m7", "category": 670
+      },
+      {
+        "id": 25763, "model": "Verta-P3020", "name": "PXIe Switch Matrix and Optical Power Management",
+        "description": "8-port integrated PXIe instrument for high-speed serial bus switching and fiber optics operational verification.",
+        "platform": ["PXIe"], "physicalInterface": ["Optical", "Copper"], "channels": ["8"],
+        "testApplications": ["Optical Test", "Optical Switching"],
+        "searchWeight": 1, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Teradyne_VertaP3020.jpg",
+        "brochure": "https://share.hsforms.com/1NlqCoJPGQjKobRTEYT9z4A67m7", "category": 670
+      }
+    ],
+    "switching": [
+      {
+        "id": 26063, "model": "Verta-3020", "name": "Optical Power and SwitchModule, LXI Format",
+        "description": "16-port adjustable optical power transmit and measurement for functional verification of network operations.",
+        "platform": ["LXI"], "physicalInterface": ["Optical"], "channels": ["16"],
+        "testApplications": ["Optical Switching"],
+        "searchWeight": 2, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Verta-3020.png", "category": 673
+      },
+      {
+        "id": 26062, "model": "Verta-3010", "name": "Multi-Protocol Switch Module, LXI Format",
+        "description": "16-port switching module supporting numerous SFP transceivers for multiple bus protocols from 100M to 10G.",
+        "platform": ["LXI"], "physicalInterface": ["Optical", "Copper"], "channels": ["16"],
+        "searchWeight": 1, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Verta-3010_03-1.png", "category": 673
+      },
+      {
+        "id": 26061, "model": "Verta-P3020", "name": "PXIe Switch Matrix and Optical Power Management",
+        "description": "Integrated PXIe instrument for high-speed serial bus switching and fiber optics operational verification.",
+        "platform": ["PXIe"], "physicalInterface": ["Optical", "Copper"], "channels": ["8"],
+        "testApplications": ["Optical Test", "Optical Switching"],
+        "searchWeight": 3, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Teradyne_VertaP3020.jpg", "category": 673
+      }
+    ],
+    "parallelDigitalTest": [
+      {
+        "id": 25823, "model": "Di-Series", "name": "High-Density VXI-based Parallel Digital Instrument",
+        "description": "Powerful parallel digital test instrument with performance, density, flexibility, and reliability to meet the most challenging Aerospace and Defense test requirements.",
+        "platform": ["VXI"], "physicalInterface": ["Copper"], "swDefined": false, "ce": false,
+        "supportedBus": ["Programmable Digital I/O", "1149.1 Boundary Scan", "Custom parallel bus"],
+        "testApplications": ["Parallel digital functional test", "Boundary scan"],
+        "searchWeight": 3, "channels": ["32", "48", "64"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Di-Series-Collage.png",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2020/02/Di-Series-Datasheet.pdf", "category": 671
+      },
+      {
+        "id": 25817, "model": "HSSub-6140", "name": "8G Hybrid I/O Instrument",
+        "description": "Software-defined PXIe test instrument for concurrently operating high-speed serial and parallel buses.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": true,
+        "supportedBus": ["LVTTL", "LVDS", "M-LVDS", "I2C", "SPI", "Multi-Gigabit Transceiver (MGT)", "1149.1 Boundary Scan"],
+        "testApplications": ["Parallel digital functional test", "Boundary scan", "FLASH Programming", "Custom bus test", "Concurrent parallel and serial bus test"],
+        "searchWeight": 4, "channels": ["20", "96"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6140-Angeled-Side.jpg",
+        "brochure": "https://share.hsforms.com/19HfoYQP6SIa1DCfoYHq_3A67m7", "category": 671
+      },
+      {
+        "id": 25805, "model": "HSSub-6025", "name": "Reconfigurable LVTTL I/O Instrument",
+        "description": "Software-defined digital PXIe test instrument with 96 bi-directional LVTTL channels. Supports functional and boundary scan testing.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": true,
+        "supportedBus": ["LVTTL", "LVDS", "I2C", "SPI", "PCI", "1149.1 Boundary Scan"],
+        "testApplications": ["Parallel digital functional test", "Boundary scan", "FLASH Programming", "Custom bus test"],
+        "searchWeight": 5, "channels": ["96"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/HSSub-6025.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/12/HSSub-6025-LVTTL-Instrument-Brochure.pdf", "category": 671
+      },
+      {
+        "id": 25799, "model": "eDigital-6030", "name": "Reconfigurable Digital Instrument with Pin Electronics",
+        "description": "Software-defined parallel digital PXIe test instrument with per-pin programmable voltage and timing. Supports 32-channels of functional and boundary scan testing.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": true,
+        "supportedBus": ["LVTTL", "TTL", "LVDS", "I2C", "SPI", "PCI", "1149.1 Boundary Scan"],
+        "testApplications": ["Parallel digital functional test", "Boundary scan", "FLASH Programming", "Custom bus test"],
+        "searchWeight": 1, "channels": ["32"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/eDigital-6030-front-facing-left-no-bkgd.jpg",
+        "brochure": "https://share.hsforms.com/1SHdeYOC5ROS-3Sq8V_Qiqg67m7", "category": 671
+      },
+      {
+        "id": 25793, "model": "eDigital-6020A", "name": "Reconfigurable Digital I/O Instrument",
+        "description": "Software-defined parallel digital PXIe test instrument with integrated funnel. Supports 32 dynamic or up to 64 static channels of parallel digital and boundary scan testing.",
+        "platform": ["PXIe"], "physicalInterface": ["Copper"], "swDefined": true, "ce": false,
+        "supportedBus": ["LVTTL", "LVDS", "I2C", "SPI", "PCI", "1149.1 Boundary Scan"],
+        "testApplications": ["Parallel digital functional test", "Boundary scan", "FLASH Programming", "Custom bus test"],
+        "searchWeight": 2, "channels": ["32", "64"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/eDigital-6020A_001.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/eDigital-6020A-Digital-Instrument-Brochure.pdf", "category": 671
+      }
+    ],
+    "configurableTestSystems": [
+      {
+        "id": 25757, "model": "Guardian", "name": "Portable, Configurable, At-platform Field Deployable Test System",
+        "description": "Ruggedized, automated test platform for field testing. Guardian's open architecture and software-defined configurability allows it to address a wide range of today's field test applications.",
+        "platform": ["PXIe"],
+        "testApplications": ["Field and Operational-level (O-level) test", "Flightline test"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2022/03/TER-248_Guardian_Front.png",
+        "brochure": "https://share.hsforms.com/1JHeJ-Qw5Q8m9egJ8X1yzig67m7", "category": 669
+      },
+      {
+        "id": 25751, "model": "Spectrum BT", "name": "Compact Functional Test System",
+        "description": "Fully integrated, highly-configurable, PXI-based test system optimized for testing a focused group of Units Under Test (UUTs).",
+        "platform": ["PXI", "PXIe", "LXI"],
+        "testApplications": ["Manufacturing", "Intermediate-level (I-level) test and repair", "Multi-site manufacturing and depot", "Design verification"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/BT-Tile.png",
+        "brochure": "https://share.hsforms.com/1_pLnMKstTj-jVl9ki-z4xg67m7", "category": 669
+      },
+      {
+        "id": 25745, "model": "Spectrum HS", "name": "High-Speed, High-Performance Functional Test System",
+        "description": "Fully integrated, highly-configurable, PXI-based test system optimized for high-speed, advanced mixed-technology test applications.",
+        "platform": ["PXI", "PXIe", "LXI"],
+        "testApplications": ["Manufacturing", "Intermediate-level (I-level) test and repair", "Depot (D-level) test and repair", "Multi-site manufacturing and depot"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Spectrum-HS_View-1_no-bkgd.jpg",
+        "brochure": "https://share.hsforms.com/1o7qPiOrvQNqC70NNuMsC9g67m7", "category": 669
+      },
+      {
+        "id": 25739, "model": "Spectrum 9100", "name": "High-Performance, High-Density Functional Test System",
+        "description": "Fully integrated, high-density, VXI-based configurable test system optimized for a wide range of test applications and a large number of products.",
+        "platform": ["PXI", "PXIe", "LXI", "VXI"],
+        "testApplications": ["Manufacturing", "Intermediate-level (I-level) test and repair", "Depot (D-level) test and repair"],
+        "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Spectrum-9100.jpg",
+        "brochure": "https://share.hsforms.com/1nmwd11qcTRGcUSSthqq_9Q67m7", "category": 669
+      }
+    ],
+    "analogTest": [
+      {
+        "id": 25727, "model": "Ai-710", "name": "High Density Multifunction Parallel Analog Test Instrument",
+        "description": "32-channels, 6 instruments per channel (DMM, Digitizer, Timer Counter, Limit Detector, Function Generator, Arbitrary Waveform Generator).",
+        "platform": ["VXI"], "function": "High Density Multifunction Parallel Analog Test Instrument",
+        "searchWeight": 1, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/Ai-710.jpg",
+        "brochure": "https://www.teradyne.com/ai-710/", "category": 668
+      },
+      {
+        "id": 25726, "model": "ZT5212-01VXI", "name": "ZT5210 Series Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 4-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["4"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 37, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25725, "model": "ZT5212-01LXI", "name": "ZT5210 Series Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 4-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["4"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 36, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25724, "model": "ZT5211-01VXI", "name": "Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 2-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 35, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25723, "model": "ZT5211-01PXIENV", "name": "Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 2-Channel, Conformal Coated, PXI Format.",
+        "platform": ["PXI"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 34, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25722, "model": "ZT5211-01PXIE", "name": "Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 2-Channel, PXIe Format.",
+        "platform": ["PXIe"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 33, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25721, "model": "ZT5211-01PXI", "name": "Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 2-Channel, PXI Format.",
+        "platform": ["PXI"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 32, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25715, "model": "ZT5211-01LXI", "name": "Arbitrary/Function Waveform Generator",
+        "description": "50 MHz, 200 MS/s, 14-bit, 2-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Arbitrary/Function Waveform Generator",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "50 MHz", "sampleRate": "200 MS/s",
+        "searchWeight": 31, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT5200-Series.jpg", "category": 668
+      },
+      {
+        "id": 25714, "model": "ZT4629VXI", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 1 GS/s, 8-bit, 4-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["4"], "analogBandwidth": "500 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 30, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25713, "model": "ZT4629LXI", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 1 GS/s, 8-bit, 4-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["4"], "analogBandwidth": "500 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 29, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25712, "model": "ZT4628VXI-JSF", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 2 GS/s, 8-bit, 2-Channel, Advanced External Triggering, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "500 MHz", "sampleRate": "2 GS/s",
+        "searchWeight": 28, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25711, "model": "ZT4628VXI", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 2 GS/s, 8-bit, 2-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "500 MHz", "sampleRate": "2 GS/s",
+        "searchWeight": 27, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25710, "model": "ZT4628PXIE", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 2 GS/s, 8-bit, 2-Channel, PXIe Format.",
+        "platform": ["PXIe"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "500 MHz", "sampleRate": "2 GS/s",
+        "searchWeight": 26, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25709, "model": "ZT4628PXI", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 2 GS/s, 8-bit, 2-Channel, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "500 MHz", "sampleRate": "2 GS/s",
+        "searchWeight": 25, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25708, "model": "ZT4628LXI", "name": "Oscilloscope/Digitizer",
+        "description": "500 MHz, 2 GS/s, 8-bit, 2-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "500 MHz", "sampleRate": "2 GS/s",
+        "searchWeight": 24, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT462x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25707, "model": "ZT4612VXI", "name": "Oscilloscope/Digitizer",
+        "description": "1 GHz, 4 GS/s, 8-bit, 4-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["4"], "analogBandwidth": "1 GHz", "sampleRate": "4 GS/s",
+        "searchWeight": 23, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT461x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25706, "model": "ZT4612LXI", "name": "Oscilloscope/Digitizer",
+        "description": "1 GHz, 4 GS/s, 8-bit, 4-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["4"], "analogBandwidth": "1 GHz", "sampleRate": "4 GS/s",
+        "searchWeight": 22, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT461x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25704, "model": "ZT4611VXI", "name": "Oscilloscope/Digitizer",
+        "description": "1 GHz, 4 GS/s, 8-bit, 2-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "1 GHz", "sampleRate": "4 GS/s",
+        "searchWeight": 20, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT461x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25703, "model": "ZT4611PXI", "name": "Oscilloscope/Digitizer",
+        "description": "1 GHz, 4 GS/s, 8-bit, 2-Channel, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "1 GHz", "sampleRate": "4 GS/s",
+        "searchWeight": 19, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT461x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25697, "model": "ZT4611LXI", "name": "Oscilloscope/Digitizer",
+        "description": "1 GHz, 4 GS/s, 8-bit, 2-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "1 GHz", "sampleRate": "4 GS/s",
+        "searchWeight": 18, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4600-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT461x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25696, "model": "ZT4442VXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 4-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["4"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 17, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25695, "model": "ZT4442LXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 4-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["4"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 16, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25694, "model": "ZT4441VXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 2-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 15, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25693, "model": "ZT4441PXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 2-Channel, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 14, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25692, "model": "ZT4441LXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 2-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 13, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25691, "model": "ZT4441DFPXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 2-Channel, Differential Inputs, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 12, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25690, "model": "ZT4441DFENVPXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 800 MS/s, 14 bit, 2-Channel, Differential Inputs, Conformal Coated, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "14-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "800 MS/s",
+        "searchWeight": 11, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT444x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25689, "model": "ZT4421VXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 12 bit, 2-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "12-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 10, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT442x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25688, "model": "ZT4421PXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 12 bit, 2-Channel, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "12-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 9, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT442x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25682, "model": "ZT4421LXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 12 bit, 2-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "12-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 8, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4400-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT442x-Series-of-Digital-Storage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25681, "model": "ZT4212-01VXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 8-bit, 4-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["4"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 7, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4200-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT421x-Series-of-High-Voltage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25680, "model": "ZT4212-01LXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 8-bit, 4-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["4"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 6, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4200-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT421x-Series-of-High-Voltage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25679, "model": "ZT4211-01VXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 8-bit, 2-Channel, VXI Format.",
+        "platform": ["VXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 5, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4200-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT421x-Series-of-High-Voltage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25678, "model": "ZT4211-01PXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 8-bit, 2-Channel, PXI Format.",
+        "platform": ["PXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 4, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4200-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT421x-Series-of-High-Voltage-Oscilloscopes.pdf", "category": 668
+      },
+      {
+        "id": 25672, "model": "ZT4211-01LXI", "name": "Oscilloscope/Digitizer",
+        "description": "300 MHz, 1 GS/s, 8-bit, 2-Channel, LXI Format.",
+        "platform": ["LXI"], "function": "Oscilloscope/Digitizer",
+        "resolution": "8-bit", "channels": ["2"], "analogBandwidth": "300 MHz", "sampleRate": "1 GS/s",
+        "searchWeight": 3, "image": "https://www.teradyne.com/wp-content/uploads/2024/07/ZT4200-Series.jpg",
+        "brochure": "https://www.teradyne.com/wp-content/uploads/2024/11/ZT421x-Series-of-High-Voltage-Oscilloscopes.pdf", "category": 668
+      }
+    ],
+    "relatedProductPages": {
+      "_note": "These are from the separate 'products' WP post type (product_cat=35, Defense & Aerospace), providing richer marketing content pages",
+      "products": [
+        {
+          "id": 29756, "title": "Guardian", "slug": "guardian",
+          "excerpt": "Portable, O-Level ATE Platform",
+          "specs": { "dimensions": "15x25x16 inches", "weight": "<48 lbs", "tempRange": "-55 to +85C", "power": "24V-28V DC or 115V AC 60Hz-400Hz", "memory": "32GB DDR4", "storage": "500GB SSD" },
+          "compliance": ["MIL-PRF-28800", "MIL-STD-810", "MIL-STD-1472"]
+        },
+        {
+          "id": 28146, "title": "Tempo", "slug": "tempo",
+          "excerpt": "Automated, Scalable Thermal Test Solution for Factory Applications",
+          "specs": { "heatingElement": "30kW", "tempRange": "-55 to +85C", "rampRate": "15C/min max", "airflow": "1500-1600 CFM" },
+          "configurations": ["Tempo Workbench", "TempoOne (1 UUT)", "Tempo (4 UUTs)"]
+        },
+        {
+          "id": 10605, "title": "Spectrum RF Systems", "slug": "spectrum-rf-systems",
+          "excerpt": "Fully integrated configurable test platforms for mixed-signal and microwave applications up to 26.5GHz"
+        },
+        {
+          "id": 8618, "title": "Reconfigurable Instruments & Subsystems (HSSub)", "slug": "high-speed-subsystem",
+          "excerpt": "Software-defined family of PXIe Instrumentation for digital test applications"
+        },
+        {
+          "id": 16414, "title": "Mixed-Technology Test Systems", "slug": "mixed-tech-test-systems",
+          "excerpt": "Integrated Advanced Test Capabilities for Missile, Radar, Electronic Warfare, and Space Applications"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "totalFinderProducts": 71,
+    "breakdown": {
+      "Analog Test (668)": "35 products (ZT-Series oscilloscopes/digitizers, waveform generators, Ai-710)",
+      "Serial Bus Test (672)": "19 products (HSSub-6xxx, HSSub-8xxx, HSSub-9xxx, PXIe-25G, PXIe-1553, PXIe-C429)",
+      "Optical Test (670)": "5 products (Verta-3010, Verta-3020, Verta-5010, Verta-P3020, HSSub-6065)",
+      "Parallel Digital Test (671)": "5 products (Di-Series, HSSub-6140, HSSub-6025, eDigital-6030, eDigital-6020A)",
+      "Configurable Test Systems (669)": "4 products (Guardian, Spectrum BT, Spectrum HS, Spectrum-9100)",
+      "Switching (673)": "3 products (Verta-3020, Verta-3010, Verta-P3020)"
+    },
+    "note": "Some products appear in multiple categories (e.g., Verta products appear in both Optical Test and Switching, HSSub-6140 appears in both Serial Bus Test and Parallel Digital Test). The Analog Test category has ~35 products but the API only returns the first page. The 'products' post type (product_cat=35) contains higher-level marketing pages for Guardian, Tempo, Spectrum RF Systems, HSSub, and Mixed-Technology Test Systems."
+  }
+}

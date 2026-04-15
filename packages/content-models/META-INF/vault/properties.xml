@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>FileVault Package Properties</comment>
+    <entry key="name">4teradyne-content-models</entry>
+    <entry key="group">teradyne</entry>
+    <entry key="version">1.0.0</entry>
+    <entry key="description">Content Fragment Models for the Defense &amp; Aerospace Product Explorer - includes CF models, DAM folder structure, and configuration.</entry>
+    <entry key="createdBy">excat-migration</entry>
+    <entry key="packageType">content</entry>
+    <entry key="requiresRoot">false</entry>
+    <entry key="acHandling">merge</entry>
+</properties>
