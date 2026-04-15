@@ -4,7 +4,7 @@
           xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="cq:Template"
           jcr:title="Product Popup Detail"
-          jcr:description="Rich popup content for supported bus or test application entries with heading, description, related instruments, CTA, and image"
+          jcr:description="Rich popup content for supported bus or test application entries"
           ranking="{Long}300"
           status="enabled">
     <jcr:content
@@ -14,72 +14,73 @@
         formModelPath="dam/cfm/models/editor/components/aemform">
         <items jcr:primaryType="nt:unstructured">
 
-            <heading
-                jcr:primaryType="nt:unstructured"
+            <heading jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Heading"
-                fieldDescription="Popup heading displayed at top of detail overlay (e.g., Data-Intensive Testing, AESA Radar Test)"
+                fieldDescription="Popup heading (e.g., Data-Intensive Testing)"
                 name="heading"
                 required="{Boolean}true"
                 renderType="textfield"
                 valueType="string"/>
 
-            <details
-                jcr:primaryType="nt:unstructured"
+            <details jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Details"
-                fieldDescription="Detailed description of the capability or test application"
+                fieldDescription="Detailed description of the capability"
                 name="details"
                 required="{Boolean}false"
-                renderType="textarea-richtext"
+                renderType="textarea"
                 valueType="string"/>
 
-            <relatedInstrumentsHeading
-                jcr:primaryType="nt:unstructured"
+            <relatedInstrumentsHeading jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Related Instruments Heading"
-                fieldDescription="Subheading for the related instruments section"
+                fieldDescription="Subheading for related instruments section"
                 name="relatedInstrumentsHeading"
                 required="{Boolean}false"
                 renderType="textfield"
                 valueType="string"
                 defaultValue="Related Instruments"/>
 
-            <relatedInstruments
-                jcr:primaryType="nt:unstructured"
+            <relatedInstruments jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Related Instruments"
-                fieldDescription="HTML list of related instruments for this capability"
+                fieldDescription="Comma-separated list of related instrument names"
                 name="relatedInstruments"
                 required="{Boolean}false"
-                renderType="textarea-richtext"
-                valueType="string"/>
+                renderType="textfield"
+                multi="{Boolean}true"
+                valueType="string[]"/>
 
-            <ctaLabel
-                jcr:primaryType="nt:unstructured"
+            <ctaLabel jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="CTA Button Label"
-                fieldDescription="Label for the call-to-action button in the popup"
+                fieldDescription="Call-to-action button text"
                 name="ctaLabel"
                 required="{Boolean}false"
                 renderType="textfield"
                 valueType="string"/>
 
-            <ctaUrl
-                jcr:primaryType="nt:unstructured"
+            <ctaUrl jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="CTA Button URL"
-                fieldDescription="URL for the call-to-action button"
+                fieldDescription="Call-to-action button link"
                 name="ctaUrl"
                 required="{Boolean}false"
                 renderType="textfield"
                 valueType="string"/>
 
-            <image
-                jcr:primaryType="nt:unstructured"
+            <image jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/contentreference"
                 fieldLabel="Popup Image"
-                fieldDescription="Optional image displayed in the popup detail view"
+                fieldDescription="Optional image for the popup"
                 name="image"
                 required="{Boolean}false"
                 renderType="contentreference"

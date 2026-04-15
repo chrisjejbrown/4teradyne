@@ -4,7 +4,7 @@
           xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="cq:Template"
           jcr:title="Product Explorer Filter Configuration"
-          jcr:description="Defines filter column metadata for the product explorer (display label, UI type, options, sort order)"
+          jcr:description="Filter column metadata for the product explorer"
           ranking="{Long}400"
           status="enabled">
     <jcr:content
@@ -14,56 +14,58 @@
         formModelPath="dam/cfm/models/editor/components/aemform">
         <items jcr:primaryType="nt:unstructured">
 
-            <filterName
-                jcr:primaryType="nt:unstructured"
+            <filterName jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Filter Name"
-                fieldDescription="Internal identifier matching product field names (e.g., platform, supportedBus, testApplications)"
+                fieldDescription="Internal identifier (e.g., platform, supportedBus)"
                 name="filterName"
                 required="{Boolean}true"
                 renderType="textfield"
                 valueType="string"/>
 
-            <displayLabel
-                jcr:primaryType="nt:unstructured"
+            <displayLabel jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Display Label"
-                fieldDescription="Column header text shown in the explorer UI (e.g., Platform, Supported Bus)"
+                fieldDescription="Column header text in the explorer UI"
                 name="displayLabel"
                 required="{Boolean}true"
                 renderType="textfield"
                 valueType="string"/>
 
-            <filterType
-                jcr:primaryType="nt:unstructured"
+            <filterType jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/enumeration"
                 fieldLabel="Filter Type"
-                fieldDescription="UI control type for this filter"
+                fieldDescription="UI control type"
                 name="filterType"
                 required="{Boolean}true"
                 renderType="dropdown"
                 valueType="string"
-                defaultValue="multi-select">
+                defaultValue="multi-select"
+                emptyOption="{Boolean}false">
                 <items jcr:primaryType="nt:unstructured">
                     <multiSelect jcr:primaryType="nt:unstructured" value="multi-select" label="Multi-Select"/>
                     <singleSelect jcr:primaryType="nt:unstructured" value="single-select" label="Single-Select"/>
-                    <boolean jcr:primaryType="nt:unstructured" value="boolean" label="Boolean (Yes/No)"/>
-                    <range jcr:primaryType="nt:unstructured" value="range" label="Range"/>
+                    <booleanType jcr:primaryType="nt:unstructured" value="boolean" label="Boolean (Yes/No)"/>
+                    <rangeType jcr:primaryType="nt:unstructured" value="range" label="Range"/>
                 </items>
             </filterType>
 
-            <options
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="dam/cfm/models/editor/components/tags"
+            <options jcr:primaryType="nt:unstructured"
+                cfm-element=""
+                sling:resourceType="dam/cfm/models/editor/components/textfield"
                 fieldLabel="Filter Options"
-                fieldDescription="Predefined option values for this filter. Leave empty for boolean filters."
+                fieldDescription="Predefined option values (leave empty for boolean filters)"
                 name="options"
                 required="{Boolean}false"
-                renderType="tags"
+                renderType="textfield"
+                multi="{Boolean}true"
                 valueType="string[]"/>
 
-            <sortOrder
-                jcr:primaryType="nt:unstructured"
+            <sortOrder jcr:primaryType="nt:unstructured"
+                cfm-element=""
                 sling:resourceType="dam/cfm/models/editor/components/numberfield"
                 fieldLabel="Sort Order"
                 fieldDescription="Display order of this filter column (lower = leftmost)"
