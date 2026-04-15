@@ -9,6 +9,7 @@
           status="enabled">
     <jcr:content
         jcr:primaryType="nt:unstructured"
+        sling:resourceType="dam/cfm/models/console/components/data/entity/default"
         jcr:title="Product Category"
         dataTypesConfig="/mnt/overlay/settings/dam/cfm/models/formbuilderconfig/datatypes"
         formModelPath="dam/cfm/models/editor/components/aemform">
