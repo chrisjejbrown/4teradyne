@@ -7,7 +7,7 @@
           jcr:description="Defines filter column metadata for the product explorer (display label, UI type, options, sort order)"
           ranking="{Long}400"
           status="enabled">
-    <jcr:content jcr:primaryType="dam:cfm/models/formbuilderconfig">
+    <jcr:content jcr:primaryType="nt:unstructured">
         <items jcr:primaryType="nt:unstructured">
 
             <filterName

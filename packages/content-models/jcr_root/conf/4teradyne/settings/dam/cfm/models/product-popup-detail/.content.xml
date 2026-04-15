@@ -7,7 +7,7 @@
           jcr:description="Rich popup content for supported bus or test application entries with heading, description, related instruments, CTA, and image"
           ranking="{Long}300"
           status="enabled">
-    <jcr:content jcr:primaryType="dam:cfm/models/formbuilderconfig">
+    <jcr:content jcr:primaryType="nt:unstructured">
         <items jcr:primaryType="nt:unstructured">
 
             <heading
