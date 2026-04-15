@@ -45,7 +45,7 @@ output.on('close', () => {
   const sizeKB = (archive.pointer() / 1024).toFixed(1);
   console.log(`\nPackage built: ${OUTPUT_FILE} (${sizeKB} KB)`);
   console.log('\nPackage contents:');
-  console.log('  CF Models (4):');
+  console.log('  CF Models (4) — model nodes only, no parent conf overwrite:');
   console.log('    - /conf/4teradyne/settings/dam/cfm/models/defense-product');
   console.log('    - /conf/4teradyne/settings/dam/cfm/models/product-category');
   console.log('    - /conf/4teradyne/settings/dam/cfm/models/product-popup-detail');
@@ -53,10 +53,6 @@ output.on('close', () => {
   console.log('  DAM Folders:');
   console.log('    - /content/dam/4teradyne/products');
   console.log('    - /content/dam/4teradyne/defense-aerospace/product-explorer');
-  console.log('\nTo install:');
-  console.log('  1. Open AEM Package Manager');
-  console.log('  2. Upload 4teradyne-content-models-1.0.0.zip');
-  console.log('  3. Install the package');
 });
 
 archive.on('error', (err) => { throw err; });
